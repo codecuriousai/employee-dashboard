@@ -128,7 +128,9 @@ const EmployeeList: React.FC = () => {
           {employees.map(emp => (
             <tr key={emp.id} className="employee-row">
               <td>{emp.id}</td>
-              <td>{emp.name}</td>
+              <td>
+                <button className="link-btn" onClick={() => navigate(`/employees/${emp.id}`)}>{emp.name}</button>
+              </td>
               <td>{emp.department}</td>
               <td>{emp.email}</td>
               <td className="employee-actions">

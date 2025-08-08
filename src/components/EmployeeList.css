@@ -141,3 +141,12 @@
 .employee-row:hover {
   background: #fafbfc;
 }
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  padding: 0;
+  cursor: pointer;
+}
+.link-btn:hover { text-decoration: underline; }
