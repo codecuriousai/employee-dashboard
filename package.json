@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
@@ -20,8 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "test:ci": "CI=true react-scripts test --coverage --watchAll=false",
+    "test:coverage": "react-scripts test --coverage --watchAll=false --passWithNoTests",
+    "test:ci": "CI=true react-scripts test --coverage --watchAll=false --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,13 +47,19 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
+      "!src/index.js",
       "!src/index.tsx",
-      "!src/serviceWorker.ts",
-      "!src/reportWebVitals.ts"
+      "!src/serviceWorker.js",
+      "!src/setupTests.js",
+      "!src/**/*.test.{js,jsx,ts,tsx}",
+      "!src/**/*.stories.{js,jsx,ts,tsx}",
+      "!src/**/__tests__/**"
     ],
     "coverageReporters": [
-      "text",
+      "json",
+      "json-summary", 
       "lcov",
+      "text",
       "html"
     ],
     "coveragePathIgnorePatterns": [

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Home.css';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -23,6 +24,7 @@ const Home: React.FC = () => {
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -88,13 +90,22 @@ const Home: React.FC = () => {
     <div className="home-container">
       <header className="header">
         <h1>User Management System</h1>
-        <button
-          className="add-btn"
-          onClick={() => setShowForm(true)}
-          disabled={showForm}
-        >
-          Add New User
-        </button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            className="add-btn"
+            onClick={() => setShowForm(true)}
+            disabled={showForm}
+          >
+            Add New User
+          </button>
+          <button
+            className="add-btn"
+            onClick={() => navigate('/employees')}
+            style={{ backgroundColor: '#17a2b8' }}
+          >
+            Go to Employee List
+          </button>
+        </div>
       </header>
 
       {showForm && (
