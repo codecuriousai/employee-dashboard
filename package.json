@@ -46,20 +46,34 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
+     "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
+      "!src/index.js",
       "!src/index.tsx",
-      "!src/serviceWorker.ts",
-      "!src/reportWebVitals.ts"
+      "!src/serviceWorker.js",
+      "!src/setupTests.js",
+      "!src/**/*.test.{js,jsx,ts,tsx}",
+      "!src/**/*.stories.{js,jsx,ts,tsx}"
     ],
     "coverageReporters": [
-      "text",
+      "json",
+      "json-summary", 
       "lcov",
+      "text",
       "html"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/src/index.tsx"
-    ]
+    ],
+    "coverageDirectory": "coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 0,
+        "functions": 0,
+        "lines": 0,
+        "statements": 0
+      }
+    }
   }
 }
