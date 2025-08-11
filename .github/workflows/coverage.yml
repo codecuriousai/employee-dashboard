@@ -1,6 +1,13 @@
 name: Code Coverage
 
 on:
+  workflow_dispatch:  # Required for manual/API triggering
+    inputs:
+      branch:
+        description: 'Branch to run coverage on'
+        required: false
+        default: 'main'
+        type: string
   push:
     branches: [ main, develop ]
   pull_request:
@@ -15,6 +22,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
+        ref: ${{ github.event.inputs.branch || github.ref }}
         fetch-depth: 0
 
     # 2. Setup Node.js
@@ -62,4 +70,5 @@ jobs:
       run: |
         echo "🎉 Coverage workflow completed successfully!"
         echo "📊 Coverage report available in artifacts"
+        echo "🌿 Branch: ${{ github.event.inputs.branch || github.ref_name }}"
       if: always()
