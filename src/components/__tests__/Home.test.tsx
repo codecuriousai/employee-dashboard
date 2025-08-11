@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, within, waitForElementToBeRemoved } from '@testing-library/react';
 import Home from '../Home';
 import '@testing-library/jest-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 // Mock window.confirm for delete
 beforeEach(() => {
@@ -13,19 +14,31 @@ afterEach(() => {
 
 describe('Home Component', () => {
   test('renders Home component', () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     expect(screen.getByText('User Management System')).toBeInTheDocument();
   });
 
   test('renders initial users', () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Jane Smith')).toBeInTheDocument();
     expect(screen.getByText('Bob Johnson')).toBeInTheDocument();
   });
 
   test('shows add user form when Add New User is clicked', () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     // Click the button (not the heading)
     const addBtn = screen.getByRole('button', { name: 'Add New User' });
     fireEvent.click(addBtn);
@@ -37,7 +50,11 @@ describe('Home Component', () => {
   });
 
   test('adds a new user', async () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     fireEvent.click(screen.getByRole('button', { name: 'Add New User' }));
     fireEvent.change(screen.getByLabelText('Name:'), { target: { value: 'Alice' } });
     fireEvent.change(screen.getByLabelText('Email:'), { target: { value: 'alice@example.com' } });
@@ -49,7 +66,11 @@ describe('Home Component', () => {
   });
 
   test('edits an existing user', async () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     fireEvent.click(screen.getAllByRole('button', { name: 'Edit' })[0]);
     expect(screen.getByRole('heading', { name: 'Edit User' })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText('Name:'), { target: { value: 'John Updated' } });
@@ -60,7 +81,11 @@ describe('Home Component', () => {
   });
 
   test('deletes a user', async () => {
-    render(<Home />);
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <Home />
+      </MemoryRouter>
+    );
     
     // Verify Jane Smith exists initially
     expect(screen.getByText('Jane Smith')).toBeInTheDocument();
