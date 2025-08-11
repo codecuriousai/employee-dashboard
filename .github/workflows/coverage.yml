@@ -32,16 +32,37 @@ jobs:
     - name: Run tests with coverage
       run: npm run test:coverage-ci
 
-    # 5. Upload coverage folder as artifact
+    # 5. Debug: List coverage directory contents
+    - name: List coverage directory
+      run: |
+        if [ -d coverage ]; then
+          ls -l coverage
+        else
+          echo "coverage directory not found"
+        fi
+
+    # 6. Upload coverage folder as artifact (only if it exists)
     - name: Upload coverage report
+      if: always()  # Always run this step
+      run: |
+        if [ -d coverage ]; then
+          echo "Uploading coverage directory"
+          tar -czf coverage.tar.gz coverage
+        else
+          echo "No coverage directory to upload"
+        fi
+      continue-on-error: true
+
+    - name: Upload coverage artifact
+      if: always()  # Always run this step
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: coverage
+        path: coverage.tar.gz
         retention-days: 7
-      if: always()  # Always upload coverage even if tests fail
+      continue-on-error: true
 
-    # 6. Generate coverage summary
+    # 7. Generate coverage summary
     - name: Coverage Summary
       run: |
         if [ -f coverage/lcov-report/index.html ]; then
@@ -52,7 +73,7 @@ jobs:
         fi
       if: always()
 
-    # 7. Optional: Comment PR with coverage info (requires lcov.info)
+    # 8. Optional: Comment PR with coverage info (requires lcov.info)
     - name: Coverage Comment
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
