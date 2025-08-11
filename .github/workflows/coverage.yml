@@ -30,7 +30,7 @@ jobs:
 
     # 4. Run tests with coverage
     - name: Run tests with coverage
-      run: npm run test:coverage -- --watchAll=false
+      run: npm run test:coverage-ci
 
     # 5. Upload coverage folder as artifact
     - name: Upload coverage report
@@ -39,3 +39,25 @@ jobs:
         name: coverage-report
         path: coverage
         retention-days: 7
+      if: always()  # Always upload coverage even if tests fail
+
+    # 6. Generate coverage summary
+    - name: Coverage Summary
+      run: |
+        if [ -f coverage/lcov-report/index.html ]; then
+          echo "✅ Coverage report generated successfully"
+          echo "📊 Check the uploaded artifact for detailed coverage report"
+        else
+          echo "⚠️ Coverage report not found"
+        fi
+      if: always()
+
+    # 7. Optional: Comment PR with coverage info (requires lcov.info)
+    - name: Coverage Comment
+      uses: romeovs/lcov-reporter-action@v0.3.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        lcov-file: ./coverage/lcov.info
+        delete-old-comments: true
+      if: github.event_name == 'pull_request' && hashFiles('coverage/lcov.info') != ''
+      continue-on-error: true
