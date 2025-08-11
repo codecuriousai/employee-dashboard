@@ -10,7 +10,6 @@
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
@@ -46,14 +45,15 @@
   },
   "jest": {
     "collectCoverageFrom": [
-     "src/**/*.{js,jsx,ts,tsx}",
+      "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
       "!src/index.js",
       "!src/index.tsx",
       "!src/serviceWorker.js",
       "!src/setupTests.js",
       "!src/**/*.test.{js,jsx,ts,tsx}",
-      "!src/**/*.stories.{js,jsx,ts,tsx}"
+      "!src/**/*.stories.{js,jsx,ts,tsx}",
+      "!src/**/__tests__/**"
     ],
     "coverageReporters": [
       "json",
@@ -66,13 +66,12 @@
       "/node_modules/",
       "/src/index.tsx"
     ],
-    "coverageDirectory": "coverage",
     "coverageThreshold": {
       "global": {
-        "branches": 0,
-        "functions": 0,
-        "lines": 0,
-        "statements": 0
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
       }
     }
   }
